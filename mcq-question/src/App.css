@@ -53,8 +53,7 @@
 }
 
 .progress {
-  height: 100%; /* Matches the height of the parent progress bar */
-  background-color: #35d24e; /* Color of the progress indicator */
+  height: 100%; /* Matches the height of the parent progress bar *//* Color of the progress indicator */
   margin: 0; /* Remove default margin of the hr element */
   border: none; /* Remove border */
   border-radius: 10px; /* Matches the border radius of the parent progress bar */
@@ -113,6 +112,11 @@
 
 .btn:disabled {
   opacity: 0.6; /* Reduce opacity of disabled button */
+}
+.customModal {
+  background: white;
+  max-width: 50vw;
+  width: 100%;
 }
 
 @media (max-width: 770px) {

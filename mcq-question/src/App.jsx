@@ -1,10 +1,13 @@
 import Exam from "./components/Exam";
 import ExamD from "./components/ExamD";
 import Question from "./data";
+import 'react-responsive-modal/styles.css';
 import "./App.css"
+import { Modal } from 'react-responsive-modal';
 import { useCallback, useEffect, useState } from "react";
 function App() {
   const [timeLeft, setTimeLeft] = useState(10); // Initial time left (5 seconds)
+  const [modalopen, setModalopen] = useState(false);
 
   // Function to decrement the timer by 1 second
   const decrementTimer = () => {
@@ -15,7 +18,7 @@ function App() {
   useEffect(() => {
     // Exit if timeLeft is already 0 or negative
     if (timeLeft <= 0) {
-      // handleSubmite(); // Call handleSubmit if timeLeft reaches 0
+      handleSubmite(); // Call handleSubmit if timeLeft reaches 0
       return;
     }
 
@@ -59,6 +62,8 @@ function App() {
           marks++;
         }
       });
+      setTotalMarksReceived(marks)
+      setModalopen(true);
       console.log('Total Marks Received:', marks);
     }
   }, [selectedOptions]);
@@ -70,12 +75,47 @@ function App() {
         marks++;
       }
     });
-    console.log('Total Marks Received:', marks);
-    prompt("your marks is", marks)
+    setTotalMarksReceived(marks);
+    setModalopen(true)
   }, [selectedOptions]);
   const currentQuestion = Question[currentQuestionIndex];
   return (
     <div className="main">
+      <Modal
+        open={modalopen}
+        center
+        classNames={{
+          modal: 'customModal',
+        }}
+      >
+        <h1 style={{ textAlign: "center", padding: "20px", color: "#032539", fontSize: "30px" }}>
+          All India Test Series
+        </h1>
+        <h1 style={{ textAlign: "center", color: "#FA991C", fontSize: "26px", marginBottom: "20px" }}>
+          Your Score
+        </h1>
+        <h1 style={{ textAlign: "center", color: "#1C768F", fontSize: "40px", marginBottom: "20px" }}>
+          {totalMarksReceived}/{Question.length}
+        </h1 >
+        <h1 style={{ textAlign: "center", color: "#1C768F", fontSize: "25px", marginBottom: "20px" }}>
+          Total Time for Solving: 8mins
+        </h1>
+        <div style={{ color: "#35D24E", fontSize: "25px", marginBottom: "10px" }}>
+          Correctly Solved
+        </div>
+        <div className="progress-bar">
+          <hr className="progress" style={{ width: `${(totalMarksReceived / totalQuestions) * 100}%`, backgroundColor: "#35D24E" }} />
+        </div>
+        <div style={{ color: "red", fontSize: "25px", marginBottom: "10px" }}>
+          Solved Wrong
+        </div>
+        <div className="progress-bar">
+          <hr className="progress" style={{ width: `${100 - (totalMarksReceived / totalQuestions) * 100}%`, backgroundColor: "red" }} />
+        </div>
+        <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
+          <button style={{ padding: "10px 50px", backgroundColor: "#032539", color: "white", borderRadius: "10px", cursor: "pointer" }}>Submit</button>
+        </div>
+      </Modal>
       <div className="main-container">
         <h1>
           Exam Questions
@@ -83,7 +123,7 @@ function App() {
         <div className="exam-container">
           <ExamD timeLeft={timeLeft} />
           <div className="progress-bar">
-            <hr className="progress" style={{ width: `${progressPercentage}%` }} />
+            <hr className="progress" style={{ width: `${progressPercentage}%`, backgroundColor: "#35d24e" }} />
           </div>
           <Exam currentQuestion={currentQuestion} selectedOption={selectedOptions} handleOptionSelect={handleOptionSelect} handleNextButtonClick={handleNextButtonClick} currentQuestionIndex={currentQuestionIndex} handlePrevButtonClick={handlePrevButtonClick} length={Question.length} handleSubmitButtonClick={handleSubmit} />
         </div>
