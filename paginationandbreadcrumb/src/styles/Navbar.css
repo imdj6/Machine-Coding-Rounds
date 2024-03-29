@@ -1,0 +1,16 @@
+.nav-main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 30px 30px;
+    background-color: black;
+    color: white;
+    list-style: none;
+  }
+  .nav-main:first-child {
+    cursor: pointer;
+    font-size: large;
+    font-weight: bold;
+  }
+  
