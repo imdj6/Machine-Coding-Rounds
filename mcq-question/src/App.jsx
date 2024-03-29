@@ -6,26 +6,17 @@ import "./App.css"
 import { Modal } from 'react-responsive-modal';
 import { useCallback, useEffect, useState } from "react";
 function App() {
-  const [timeLeft, setTimeLeft] = useState(10); // Initial time left (5 seconds)
+  const [timeLeft, setTimeLeft] = useState(60);
   const [modalopen, setModalopen] = useState(false);
-
-  // Function to decrement the timer by 1 second
   const decrementTimer = () => {
     setTimeLeft(prevTime => prevTime - 1);
   };
-
-  // Effect to start the timer and handle the countdown
   useEffect(() => {
-    // Exit if timeLeft is already 0 or negative
     if (timeLeft <= 0) {
-      handleSubmite(); // Call handleSubmit if timeLeft reaches 0
+      handleSubmite(); 
       return;
     }
-
-    // Set up an interval to decrement the timer every second
     const timerInterval = setInterval(decrementTimer, 1000);
-
-    // Clear the interval when the component unmounts or timeLeft reaches 0
     return () => clearInterval(timerInterval);
   }, [timeLeft]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);

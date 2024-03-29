@@ -2,15 +2,11 @@ import { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
-  const [second, setSecond] = useState(0);
-  const [minute, setMinute] = useState(0);
+  const [time, setTime] = useState({ minute: 0, second: 0 });
   const [start, setStart] = useState(false);
-  const [timerStarted, setTimerStarted] = useState(false);
-  const [timerTicked, setTimerTicked] = useState(false);
 
   const handleStart = () => {
     setStart(true);
-    setTimerStarted(true);
   };
 
   const handleStop = () => {
@@ -18,44 +14,31 @@ function App() {
   };
 
   const handleReset = () => {
-    setSecond(0);
-    setMinute(0);
+    setTime({ minute: 0, second: 0 });
     setStart(false);
-    setTimerStarted(false);
-    setTimerTicked(false);
   };
 
   useEffect(() => {
     let intervalId;
+
     if (start) {
       intervalId = setInterval(() => {
-        setSecond(prevSecond => {
-          if (prevSecond === 10) {
-            if (!timerTicked) {
-              setTimerTicked(true);
-            }
-            return 0;
-          } else {
-            return prevSecond + 1;
-          }
+        setTime(prevTime => {
+          const newSecond = prevTime.second === 59 ? 0 : prevTime.second + 1;
+          const newMinute = prevTime.second === 59 ? prevTime.minute + 1 : prevTime.minute;
+          return { minute: newMinute, second: newSecond };
         });
       }, 1000);
     }
 
     return () => clearInterval(intervalId);
-  }, [start, timerTicked]);
-
-  useEffect(() => {
-    if (timerTicked && second === 0) {
-      setMinute(prevMinute => prevMinute + 1);
-    }
-  }, [second, timerTicked]);
+  }, [start]);
 
   return (
     <div className='main-div'>
       <div className='timer-div'>
-        <span className='timer'>{minute < 10 ? `0${minute}` : minute}</span>:
-        <span className='timer'>{second < 10 ? `0${second}` : second}</span>
+        <span className='timer'>{time.minute < 10 ? `0${time.minute}` : time.minute}</span>:
+        <span className='timer'>{time.second < 10 ? `0${time.second}` : time.second}</span>
       </div>
       <div className='btn-container'>
         <button className='btn' onClick={handleStart} disabled={start}>
