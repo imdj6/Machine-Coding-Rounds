@@ -1,0 +1,29 @@
+.product-main {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  padding: 30px;
+}
+@media screen and (max-width: 600px) {
+  .product-main {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+.card-img {
+  width: 200px;
+  height: 200px;
+}
+.product-card {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+  cursor: pointer;
+}
+.active{
+  background-color: black;
+  padding: 10px 30px;
+  color: white;
+}

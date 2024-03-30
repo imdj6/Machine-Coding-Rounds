@@ -1,0 +1,13 @@
+.nav-main{
+    display: flex;
+    background-color: black;
+    color: white;
+    justify-content: space-around;
+    align-items: center;
+    padding: 40px 30px;
+    list-style: none;
+}
+.nav-main li{
+    font-size: x-large;
+    cursor: pointer;
+}
