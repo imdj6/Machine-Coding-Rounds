@@ -4,9 +4,16 @@ export const CartContext = React.createContext();
 
 export const CartProvider = ({ children }) => {
     const [cart, setCart] = useState([]);
-    console.log(cart)
     const addtoCart = (data) => {
-        setCart([...cart, data]);
+        const cartIndex=cart.findIndex((elem) => elem.id === data.id)
+        if (cartIndex!==-1) {
+            const updatedcart=[...cart]
+            updatedcart[cartIndex].quantity+=1
+            setCart(updatedcart)
+        }
+        else {
+            setCart([...cart, { ...data, quantity: 1 }]);
+        }
     };
 
     const removefromcart = (itemId) => {

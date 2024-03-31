@@ -1,8 +1,15 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { CartContext } from '../Context/CartContext'
 
 function Cart() {
     const { cart } = useContext(CartContext)
+    const [totalPrice,setTotalPrice] = useState();
+    useEffect(() => {
+        const total = cart.reduce((total, each) => {
+           return total += each.quantity * each.price;
+        }, 0)
+        setTotalPrice(total)
+    }, [cart])
     return (
         <div style={{ padding: "15px 20px" }}>
             {cart?.length > 0 ?
@@ -16,6 +23,10 @@ function Cart() {
                     </div>
                 )) : <div style={{ fontSize: "20px", textAlign: "center", marginTop: "20px" }}>Nothing to show in cart!</div>
             }
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
+                {cart?.length > 0 && totalPrice && <div style={{ fontSize: "40px", margin: "20px 0px" }}>Total Price: ${totalPrice}</div>}
+                {cart?.length > 0 && <button style={{ backgroundColor: "black", color: "white", padding: "20px 30px", cursor: "pointer" }}>Pay Now</button>}
+            </div>
         </div>
     )
 }
