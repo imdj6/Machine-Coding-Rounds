@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react'
+import Dropdown from './Dropdown';
 
 function Currency() {
   //https://api.frankfurter.app/latest?amount=84&from=INR&to=USD
   //https://api.frankfurter.app/currencies
-  const [currencies, setCurrencies] = useState("");
+  const [currencies, setCurrencies] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [currency,setCurrency]=useState("")
+  const [currency, setCurrency] = useState("")
   useEffect(() => {
     const getcurrencies = async () => {
       try {
         setLoading(true);
         const data = await fetch("https://api.frankfurter.app/currencies");
         const resp = await data.json();
-        setCurrencies(currencies)
+        const mappablePairs = Object.entries(resp).map(([key, value]) => ({ key, value }));
+        setCurrencies(mappablePairs)
       } catch (error) {
         console.error("error while fetching the currecies..")
       }
@@ -23,7 +25,8 @@ function Currency() {
     }
     getcurrencies();
   }, [])
-  if (loading) {
+  console.log(currencies)
+  if (loading || !currencies) {
     return (
       <div>Loading....</div>
     )
@@ -32,21 +35,12 @@ function Currency() {
     return (
       <div className="bg-white max-w-xl mx-auto my-10 p-10 shadow-lg rounded-xl">
         <h2 className='text-center text-2xl font-semibold mb-5 text-gray-500'>Currency Converter</h2>
-        <div className='flex space-x-10'>
+        <div className='flex space-x-5 flex-col md:flex-row'>
           <div className='mt-4'>
-            <label htmlFor="amount"
-              className='font-semibold text-xl mb-5 text-grey-500 block'
-            >
-              Amount:
-            </label>
-            <input type="number" className='w-full border border-gray-400 rounded-md focus:outline-none p-2 px-2 shadow-sm' />
-          </div><div className='mt-4'>
-            <label htmlFor="amount"
-              className='font-semibold text-xl mb-5 text-grey-500 block'
-            >
-              Amount:
-            </label>
-            <input type="number" className='w-full border border-gray-400 rounded-md focus:outline-none p-2 px-2 shadow-sm'/>
+            <Dropdown currencies={currencies} />
+          </div>
+          <div className='mt-4'>
+            <Dropdown currencies={currencies} />
           </div>
         </div>
         <div className='mt-4'>
