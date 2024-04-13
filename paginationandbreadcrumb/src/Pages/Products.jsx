@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Card from "../components/Card";
 import "../styles/Card.css";
-const ITEMS_PER_PAGE = 4; // Number of items to display per page
+const ITEMS_PER_PAGE = 5; // Number of items to display per page
 export default function Product() {
   const [products, setProducts] = useState(null);
   const [loading, setLoading] = useState(false);

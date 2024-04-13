@@ -11,8 +11,8 @@
   height: 100vh;
 }
 .timer-div{
-    background-color: black;
-    color: white;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     padding: 30px 50px;
     font-size: 40px;
     display: flex;
@@ -31,9 +31,16 @@
 .btn{
   margin: 10px 20px;
   font-family: monospace;
-  background-color: black;
-  color: white;
+  background-color: var(--bg-color);
+  color: var(--text-color);
   padding: 10px 20px;
   cursor: pointer;
   font-weight: bold;
+}
+.theme-box{
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
 }
